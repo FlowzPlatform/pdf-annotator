@@ -122,6 +122,25 @@ export default {
       // let url = "http://localhost:8082/?file=http://res.cloudinary.com/flowz/raw/upload/v1517468894/Test/todocomponent.pdf#/"
       let url = "http://localhost:8082/?file="+'http://localhost:8081/'+params.row.fileName
       window.open(url,'_blank');
+    },
+    jsontoxls(){
+      var temp = [{
+          foo: 'bar',
+          qux: 'moo',
+          poo: 123,
+          stux: new Date()
+        },
+        {
+          foo: 'bar',
+          qux: 'moo',
+          poo: 345,
+          stux: new Date()
+        }];
+        console.log('JSON ARRAY', temp)
+      axios.post('http://localhost:8081/xls', {jsonArr: temp})
+        .then(function(response){
+          console.log('download successfully')
+        });  
     }
   },
   components: {
