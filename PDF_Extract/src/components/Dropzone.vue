@@ -2,17 +2,23 @@
   <!-- eslint-disable  -->
   <div class="hello">
     <div>
-      <form-wizard @on-complete="onComplete" @on-change="onChange" title="Flowz" subtitle="PDF annotation demo" ref="vueFormWizard">
-        <tab-content title="Personal details" icon="ti-user">
-          <vue-dropzone ref="myVueDropzone" id="dropzone" :options="dropzoneOptions"></vue-dropzone>
-          <!-- <vue-dropzone :awss3="awss3" id="dropzone" :options="dropzoneOptions" v-on:vdropzone-s3-upload-error="s3UploadError" v-on:vdropzone-s3-upload-success="s3UploadSuccess"></vue-dropzone> -->
-        </tab-content>
-        <tab-content title="Additional Info" icon="ti-settings">
-          <Table :columns="columns1" :data="data1"></Table>
-        </tab-content>
-        <tab-content title="Last step" icon="ti-check">
-          <annotate-table :arrAnnotation="arrAnnotation" :allAnnotations="annotationDetail"></annotate-table>
-        </tab-content>
+      <form-wizard @on-complete="onComplete"
+                   @on-change="onChange"
+                   title=""
+                   subtitle="">
+          <tab-content title="Upload file"
+                       icon="ti-user">
+              <vue-dropzone ref="myVueDropzone" id="dropzone" :options="dropzoneOptions"></vue-dropzone>
+            <!-- <vue-dropzone :awss3="awss3" id="dropzone" :options="dropzoneOptions" v-on:vdropzone-s3-upload-error="s3UploadError" v-on:vdropzone-s3-upload-success="s3UploadSuccess"></vue-dropzone> -->
+          </tab-content>
+          <tab-content title="File Info"
+                       icon="ti-settings">
+            <Table :columns="columns1" :data="data1"></Table>
+          </tab-content>
+          <tab-content title="Last step"
+                       icon="ti-check">
+            <annotate-table :arrAnnotation="arrAnnotation" :allAnnotations="annotationDetail"></annotate-table>
+          </tab-content>
       </form-wizard>
     </div>
   </div>
@@ -31,13 +37,13 @@
   import AnnotateTable from './AnnotateTable.vue'
   import moment from 'moment';
 
-
-  Vue.use(axios)
-  export default {
-    name: 'HelloWorld',
-    data() {
-      return {
-        dropzoneOptions: {
+ 
+Vue.use(axios)
+export default {
+  name: 'Dropzone',
+  data () {
+    return {
+      dropzoneOptions: {
           url: 'http://localhost:8081/upload',
           thumbnailWidth: 150,
           maxFilesize: 5,
@@ -83,7 +89,7 @@
                       this.show(params)
                     }
                   }
-                }, 'View'),
+                }, 'Mark'),
               ]);
             }
           }
@@ -140,7 +146,7 @@
       },
       show(params) {
         this.fileName = params.row.fileName
-        let url = 'http://localhost:8081/' + params.row.fileName
+        let url = "http://localhost:8082/?file="+'http://localhost:8081/'+params.row.fileName
         window.open(url, '_blank');
       },
       showAnnotatioinList(params) {
