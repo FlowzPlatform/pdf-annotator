@@ -4,14 +4,14 @@
     <div>
       <form-wizard @on-complete="onComplete"
                    @on-change="onChange"
-                   title="Flowz"
-                   subtitle="PDF annotation demo">
-          <tab-content title="Personal details"
+                   title=""
+                   subtitle="">
+          <tab-content title="Upload file"
                        icon="ti-user">
               <vue-dropzone ref="myVueDropzone" id="dropzone" :options="dropzoneOptions"></vue-dropzone>
             <!-- <vue-dropzone :awss3="awss3" id="dropzone" :options="dropzoneOptions" v-on:vdropzone-s3-upload-error="s3UploadError" v-on:vdropzone-s3-upload-success="s3UploadSuccess"></vue-dropzone> -->
           </tab-content>
-          <tab-content title="Additional Info"
+          <tab-content title="File Info"
                        icon="ti-settings">
             <Table :columns="columns1" :data="data1"></Table>
           </tab-content>
@@ -39,7 +39,7 @@ import axios from 'axios'
  
 Vue.use(axios)
 export default {
-  name: 'HelloWorld',
+  name: 'Dropzone',
   data () {
     return {
       dropzoneOptions: {
@@ -77,7 +77,7 @@ export default {
                                             this.show(params)
                                         }
                                     }
-                                }, 'View'),
+                                }, 'Mark'),
                                 // h('Button', {
                                 //     props: {
                                 //         type: 'error',
@@ -102,6 +102,7 @@ export default {
     },
     onChange (previous, next){
       console.log('on change called:', previous,'--', next)
+      this.$refs.myVueDropzone.removeAllFiles()
       if (previous == 0 && next == 1){
           let self = this
           axios.get('http://localhost:8081/getFileList')
@@ -117,7 +118,9 @@ export default {
     },
     show(params){
       console.log("show method call:",params.row.fileName)
-      let url = 'http://localhost:8081/'+params.row.fileName
+      // let url = 'http://localhost:8081/'+params.row.fileName
+      // let url = "http://localhost:8082/?file=http://res.cloudinary.com/flowz/raw/upload/v1517468894/Test/todocomponent.pdf#/"
+      let url = "http://localhost:8082/?file="+'http://localhost:8081/'+params.row.fileName
       window.open(url,'_blank');
     }
   },

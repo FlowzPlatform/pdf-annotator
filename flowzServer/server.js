@@ -1,8 +1,11 @@
 var express = require('express');
 var app = express();
 const fileUpload = require('express-fileupload');
-const r = require('rethinkdbdash')()
+const r = require('rethinkdbdash')();
+var cors = require('cors');
 
+// use it before all route definitions
+app.use(cors({origin: '*'}));
 app.use(fileUpload())
 app.use(express.static('public'))
 
@@ -19,7 +22,7 @@ app.post('/upload', function(req, res) {
         return res.status(500).send(err);
   
       // res.send('File uploaded!');
-      r.db("PDF_Extract").table('pdfList').insert({'fileName':req.files.file.name}).run().then(result => {
+      r.db("PDF_Extract").table('pdflist').insert({'fileName':req.files.file.name, 'created_at': new Date().toJSON()}).run().then(result => {
         res.send('File uploaded!');
       }).catch(err => {
         console.log('Error:', err)
@@ -28,7 +31,7 @@ app.post('/upload', function(req, res) {
   });
 
 app.get('/getFileList', function (req, res) {
-  r.db("PDF_Extract").table("pdfList").run().then(result => {
+  r.db("PDF_Extract").table("pdflist").orderBy('created_at').run().then(result => {
     res.send(result)
   }).catch(err => {
     console.log("Error:", err)
