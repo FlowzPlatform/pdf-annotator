@@ -42,37 +42,6 @@ app.get('/getFileList', function (req, res) {
   })
 })
 
-// var jsonArr = [{
-//   foo: 'bar',
-//   qux: 'moo',
-//   poo: 123,
-//   stux: new Date()
-// },
-// {
-//   foo: 'bar',
-//   qux: 'moo',
-//   poo: 345,
-//   stux: new Date()
-// }];
-
-
-let date = new Date().toJSON;
-app.get('/jsontoxls',function(req, res) {
-  res.xls(date+'.xlsx', jsonArr, function(error, response){
-    if (error) return console.log(error);
-    response.send(response);
-  });
-});
-
-app.post('/xls',function(req, res) {
-  console.log('Req', req.body.jsonArr)
-  let jsonArr = req.body.jsonArr;
-  res.xls(date+'.xlsx', jsonArr, function(error, response){
-    if (error) return console.log(error);
-    res.send("Success");
-  });
-});
-
 var server = app.listen(8081, function () {
    var host = server.address().address
    var port = server.address().port
