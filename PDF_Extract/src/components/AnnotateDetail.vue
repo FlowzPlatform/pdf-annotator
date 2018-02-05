@@ -6,7 +6,7 @@
 </style>
 <template>
     <div>
-        <Button type="primary" icon="ios-download-outline" @click="download">download</Button>
+        <Button type="primary" icon="ios-download-outline" @click="download" style="margin-bottom: 10px;">download</Button>
         <Table :columns="columns" :data="data" ref="table"></Table>
         
     </div>
@@ -23,17 +23,18 @@ import moment from 'moment';
             return {
                 columns: [
                     {
-                        title: 'Text',
-                        key: 'text'
-                    },
-                    {
-                        title: 'Exact',
-                        key: 'exact'
-                    },
-                    {
                         title: 'Tag',
                         key: 'tags'
                     },
+                    {
+                        title: 'Text',
+                        key: 'exact'
+                    },
+                    {
+                        title: 'Comment',
+                        key: 'text'
+                    }
+                    ,
                     {
                         title: 'Last Modified',
                         key: 'updated'

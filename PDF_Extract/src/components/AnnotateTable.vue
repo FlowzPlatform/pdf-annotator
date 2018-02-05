@@ -33,37 +33,37 @@
                         key: 'filename'
                     },
                     {
-                        title: 'Annotate',
+                        title: 'Markups',
                         key: 'total'
                     },
                     {
                         title: 'Last Modified',
                         key: 'updated'
                     },
-                    {
-                        title: 'Action',
-                        key: 'action',
-                        width: 150,
-                        align: 'center',
-                        render: (h, params) => {
-                            return h('div', [
-                                h('Button', {
-                                    props: {
-                                        size: 'small',
-                                        icon: 'ios-download-outline'
-                                    },
-                                    style: {
-                                        marginRight: '5px'
-                                    },
-                                    on: {
-                                        click: () => {
-                                            //this.loadData()
-                                        }
-                                    }
-                                }, '')
-                            ]);
-                        }
-                    }
+                    // {
+                    //     title: 'Action',
+                    //     key: 'action',
+                    //     width: 150,
+                    //     align: 'center',
+                    //     render: (h, params) => {
+                    //         return h('div', [
+                    //             h('Button', {
+                    //                 props: {
+                    //                     size: 'small',
+                    //                     icon: 'ios-download-outline'
+                    //                 },
+                    //                 style: {
+                    //                     marginRight: '5px'
+                    //                 },
+                    //                 on: {
+                    //                     click: () => {
+                    //                         //this.loadData()
+                    //                     }
+                    //                 }
+                    //             }, '')
+                    //         ]);
+                    //     }
+                    // }
                 ],
                 // data: this.arrAnnotation
             }

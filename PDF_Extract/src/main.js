@@ -6,8 +6,8 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import iView from 'iview';
-import 'iview/dist/styles/iview.css';
 import locale from 'iview/dist/locale/en-US';
+import 'iview/dist/styles/iview.css';
 
 Vue.use(iView);
 Vue.use(iView, { locale });
