@@ -1,6 +1,16 @@
 <template>
   <!-- eslint-disable  -->
-  <div class="hello">
+  <div>
+      <Menu mode="horizontal" :theme="'primary'"  >
+        <Row type="flex">
+            <i-col :span="3">
+                <div class="f-logo">
+                    <a href="#">
+                        <img src="../assets/images/logo.png" style="margin-top: 10px;"> </a>
+                </div>
+            </i-col>
+        </Row>
+      </Menu>
     <div>
       <form-wizard @on-complete="onComplete"
                    @on-change="onChange"
@@ -16,7 +26,7 @@
                        icon="ti-settings">
             <Table :columns="columns1" :data="data1"></Table>
           </tab-content>
-          <tab-content title="Last step"
+          <tab-content title="View Markups"
                        icon="ti-check">
             <annotate-table :arrAnnotation="arrAnnotation" :allAnnotations="annotationDetail"></annotate-table>
           </tab-content>
@@ -37,7 +47,6 @@
   import axios from 'axios'
   import AnnotateTable from './AnnotateTable.vue'
   import moment from 'moment';
-
  
 Vue.use(axios)
 export default {
@@ -48,7 +57,8 @@ export default {
           url: 'http://localhost:8081/upload',
           thumbnailWidth: 150,
           maxFilesize: 5,
-          acceptedFiles: ".pdf"
+          acceptedFiles: ".pdf",
+          dictDefaultMessage: "<i class='fa fa-cloud-upload'></i> Drop files here to upload"
         },
         columns1: [
           {
