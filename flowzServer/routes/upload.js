@@ -21,7 +21,7 @@ router.post('/', async (req, res) => {
     let fileList = await request(getFileList(req))
     fileList = JSON.parse(fileList)
     if (_.findIndex(fileList, {fileName: sampleFile.name}) !== -1) {
-      res.status(400).send('File aleady exists');
+      res.status(400).send(sampleFile.name + ' aleady exists');
     } else {
       
       let mainFilePath = process.cwd();

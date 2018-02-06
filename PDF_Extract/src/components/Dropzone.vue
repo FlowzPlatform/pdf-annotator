@@ -19,7 +19,7 @@
                    ref=vueFormWizard>
           <tab-content title="Upload file"
                        icon="ti-user">
-              <vue-dropzone ref="myVueDropzone" id="dropzone" :options="dropzoneOptions"></vue-dropzone>
+              <vue-dropzone ref="myVueDropzone" id="dropzone" :options="dropzoneOptions" @vdropzone-error="dropzoneResponse"></vue-dropzone>
             <!-- <vue-dropzone :awss3="awss3" id="dropzone" :options="dropzoneOptions" v-on:vdropzone-s3-upload-error="s3UploadError" v-on:vdropzone-s3-upload-success="s3UploadSuccess"></vue-dropzone> -->
           </tab-content>
           <tab-content title="File Info"
@@ -108,6 +108,7 @@ export default {
                   props: {
                     size: 'small',
                     icon: 'trash-a',
+                    type: 'error'
                   },
                   on: {
                     click: () => {
@@ -128,6 +129,11 @@ export default {
     methods: {
       onComplete: function () {
         alert('Yay. Done!');
+      },
+      dropzoneResponse (file, response) {
+        console.log('resp:', file)
+        this.$Message.error(response);
+        this.$refs.myVueDropzone.removeFile(file)
       },
       onChange(previous, next) {
         console.log('on change called:', previous, '--', next)
@@ -176,20 +182,29 @@ export default {
         window.open(url, '_blank');
       },
       deleteFile(params){
-        let self = this
-        axios.get('http://localhost:8081/deleteFile', {
-          params: {
-            filename: params.row.fileName,
-            id: params.row.id
-          }
-        })
-        .then(function (response) {
-          if(response.data.deleted == true){
-            self.data1.splice(params.index, 1);
-          }
-        })
-        .catch(function (error) {
-          console.log(error);
+        this.$Modal.confirm({
+            title: 'Delete file',
+            content: '<p>Do you want to delete file <b>'+params.row.fileName+'</b>?</p>',
+            closable: true,
+            okText: 'OK',
+            cancelText: 'Cancel',
+            onOk: () => {
+              let self = this
+              axios.get('http://localhost:8081/deleteFile', {
+                params: {
+                  filename: params.row.fileName,
+                  id: params.row.id
+                }
+              })
+              .then(function (response) {
+                if(response.data.deleted == true){
+                  self.data1.splice(params.index, 1);
+                }
+              })
+              .catch(function (error) {
+                console.log(error);
+              });
+            }
         });
       },
       showAnnotatioinList(params) {
@@ -197,6 +212,11 @@ export default {
         this.fileName = params.row.fileName
         this.$refs.vueFormWizard.nextTab()
       },
+    },
+    created () {
+      this.$Message.config({
+        duration: 3
+      });
     },
     components: {
       FormWizard,
