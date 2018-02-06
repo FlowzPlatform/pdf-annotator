@@ -72,7 +72,7 @@ export default {
                     icon: 'forward'
                   },
                   style: {
-                    marginRight: '5px'
+                    marginRight: '3px'
                   },
                   on: {
                     click: () => {
@@ -85,12 +85,26 @@ export default {
                     size: 'small',
                     icon: 'compose',
                   },
+                  style: {
+                    marginRight: '3px'
+                  },
                   on: {
                     click: () => {
                       this.show(params)
                     }
                   }
                 }, 'Mark'),
+                h('Button', {
+                  props: {
+                    size: 'small',
+                    icon: 'trash-a',
+                  },
+                  on: {
+                    click: () => {
+                      this.deleteFile(params)
+                    }
+                  }
+                }, ''),
               ]);
             }
           }
@@ -98,7 +112,7 @@ export default {
         data1: [],
         fileName: '',
         arrAnnotation: [],
-        annotationDetail: [],
+        annotationDetail: []
       }
     },
     methods: {
@@ -150,6 +164,23 @@ export default {
         this.fileName = params.row.fileName
         let url = "http://localhost:8082/?file="+'http://localhost:8081/'+params.row.fileName
         window.open(url, '_blank');
+      },
+      deleteFile(params){
+        let self = this
+        axios.get('http://localhost:8081/deleteFile', {
+          params: {
+            filename: params.row.fileName,
+            id: params.row.id
+          }
+        })
+        .then(function (response) {
+          if(response.data.deleted == true){
+            self.data1.splice(params.index, 1);
+          }
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
       },
       showAnnotatioinList(params) {
 
