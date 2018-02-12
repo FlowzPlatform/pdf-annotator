@@ -56,7 +56,7 @@ export default {
       dropzoneOptions: {
           url: 'http://localhost:8081/upload',
           thumbnailWidth: 150,
-          maxFilesize: 5,
+          maxFilesize: 500,
           acceptedFiles: ".pdf",
           dictDefaultMessage: "<i class='fa fa-cloud-upload'></i> Drop files here to upload"
         },
